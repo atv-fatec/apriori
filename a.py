@@ -6,11 +6,11 @@ import pandas as pd
 df = pd.read_csv('bread_basket.csv', sep=';')
 
 # Agrupar os itens por transação
-grouped_df = df.groupby('Transation')['Item'].apply(list).reset_index()
+grouped_df = df.groupby('Transaction')['Item'].apply(list).reset_index()
 
 # Converter os dados para o formato esperado pelo Apriori
 te = TransactionEncoder() # Transformar os dados em um array com itens únicos
-te_ary = te.fit_transform(grouped_df['Item']) # Transforma em um valor booleano
+te_ary = te.fit_transform(grouped_df['Item']) # ransforma em um valor booleano
 df_encoded = pd.DataFrame(te_ary, columns=te.columns_)  # Cada coluna representa um item e cada linha uma transação
 
 # Executar o algoritmo Apriori com tamanho máximo das regras definido para 3
@@ -28,4 +28,4 @@ rules_3_items = rules[rules['antecedents'].apply(lambda x: len(x) == 3)]
 # apply(lambda x: len(x) == 3): regra de associação de três itens antecedentes
 
 # Exibir as regras de associação com suporte e confiança
-print(rules_3_items[['support', 'confidence', 'antecedents']])
+print(rules_3_items[['support', 'confidence', 'antecedents', 'consequents']])
